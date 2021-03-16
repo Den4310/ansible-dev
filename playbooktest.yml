@@ -1,0 +1,23 @@
+---
+# this is a test
+- name: this is a test
+  hosts: renamed:!taz         # our group in our inventory
+  gather_facts: no
+  connection: ssh
+
+  vars:
+    newuser1: dennis
+
+  tasks:
+  - name: create new group
+    group:
+      name: funkytown
+      state: present
+    become: yes
+
+  - name: Add newuser1 to target hosts
+    user:
+      name: "{{ newuser1 }}"
+      state: present
+      group: funkytown
+    become: yes
